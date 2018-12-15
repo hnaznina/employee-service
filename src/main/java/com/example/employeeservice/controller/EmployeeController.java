@@ -15,12 +15,12 @@ public class EmployeeController {
 
     //@RestController perform CRUD operation.
     //delete, get put(means Update), post(means Insert)
-@GetMapping("/employees")
+    @GetMapping("/employees")
     public List<Employee> getAllEmployees(){
     log.info("Employee List: ");
         return new ArrayList<Employee>(){{
-            add(new Employee(1, "Atik", "Chicago"));
+            add(new Employee(1L, "Atik", "Chicago"));
         }};
-    }
+}
 
 }
