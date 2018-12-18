@@ -21,7 +21,7 @@ public class EmployeeController {
 
     //@RestController perform CRUD operation.
     //delete, get put(means Update), post(means Insert)
-    @GetMapping("/employee")
+    @GetMapping(value = "/employee", produces = "application/json")
     public List<Employee> getAllEmployees(){
     log.info("Employee List: ");
         return employeeService.getAllEmployees();
@@ -33,8 +33,9 @@ public class EmployeeController {
         return employeeService.getById(id);
     }
 
-    @PostMapping("/employee")
+    @PostMapping(name = "/employee", produces = "application/json")
     public HttpStatus insertEmployee(@RequestBody Employee employee) {
+
         return employeeService.addEmployee(employee) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
     }
 
@@ -44,8 +45,10 @@ public class EmployeeController {
         return HttpStatus.NO_CONTENT;
     }
 
-    @PutMapping("/employee")
+    @PutMapping(name="/employee", consumes = "application/json")
     public HttpStatus updateEmployee(@RequestBody Employee employee) {
+        log.info("Update started");
+
         return employeeService.updateEmployee(employee) ? HttpStatus.ACCEPTED : HttpStatus.BAD_REQUEST;
     }
 
