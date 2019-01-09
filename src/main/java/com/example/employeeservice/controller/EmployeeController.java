@@ -5,9 +5,12 @@ import com.example.employeeservice.service.EmployeeService;
 import com.example.employeeservice.vo.Employee;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +22,28 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Value("${message:nothing}")
+    private String message;
+
+    @PostConstruct
+    public void intit(){
+        Exception e = new Exception();
+        log.info(">>>>"+message,e);
+    }
+
     //@RestController perform CRUD operation.
     //delete, get put(means Update), post(means Insert)
     @GetMapping(value = "/employee", produces = "application/json")
-    public List<Employee> getAllEmployees(){
-    log.info("Employee List: ");
-        return employeeService.getAllEmployees();
+    public ResponseEntity<List<Employee>> getAllEmployees(){
+        log.info("Message = " + message);
+        log.info("Employee List: ");
+        try {
+            int c = 10 / 0;
+        } catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        List<Employee> employees = employeeService.getAllEmployees();
+        return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
     }
 
     @GetMapping("/employee/{id}")
